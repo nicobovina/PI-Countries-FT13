@@ -26,15 +26,19 @@ const axios = require("axios").default;
 conn.sync({ force: true }).then(async () => {
   server.listen(3001, async () => {
   // Hacemos el pedido de los paises a la API y los guardamos en la BD.
-  const response = await axios.get('https://restcountries.eu/rest/v2/all');
-  response.data.forEach( (country) => {
-        const { alpha3Code: id, name, flag, region: continent, capital, subregion, area, population } = country;
-          const countryCreated = Country.create({
-            id, name, flag, continent, capital, subregion, area, population
+  try {
+    const response = await axios.get('https://restcountries.eu/rest/v2/all');
+    response.data.forEach( (country) => {
+          const { alpha3Code: id, name, flag, region: continent, capital, subregion, area, population } = country;
+            const countryCreated = Country.create({
+              id, name, flag, continent, capital, subregion, area, population
+            });
           });
-        });
 
-    console.log('%s listening at 3001'); // eslint-disable-line no-console
+      console.log('%s listening at 3001'); // eslint-disable-line no-console
+    } catch(err){
+      console.error('SE ORIGINO EL SIGUIENTE ERROR AL INICIAR EL SERVIDOR: \n\n',err);
+    }
   });
 });
 

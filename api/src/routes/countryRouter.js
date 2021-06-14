@@ -16,16 +16,24 @@ const { Country } = require('../db.js');
 // paises se tiene que enviar.
 countryRouter.get('/', async (req, res) => {
 	// Variable que controla hasta que pais se envio.
-	const { index } = req.body;
+	// const { index } = req.body;
 	const { name } = req.query;
 	let countries;
 
-	// En caso que no nos pasen como parametro en la URL un nombre
-	if (!name)	countries = await Country.findAll({limit: 10, offset: index });
-	// En caso que recibamos como parametro en la URl un nombre
-	else	countries = await Country.findAll({ where: { name: { [Op.like]: `%${name}%` } } });
-
-	return res.status(200).send(countries);
+	try{
+		// En caso que no nos pasen como parametro en la URL un nombre
+		// if (!name)	countries = await Country.findAll({limit: 10, offset: index });
+		if (!name)	countries = await Country.findAll();
+		// En caso que recibamos como parametro en la URl un nombre
+		else {
+			countries = await Country.findAll({ where: { name: { [Op.iLike]: `%${name}%` } } });
+			// En caso que no se encuentren paises que incluyan el string name
+			if (countries.length === 0)	return res.status(404).send('Country not founded');
+		}
+		return res.status(200).send(countries);
+	} catch (err) {
+		return res.send(err);
+	}	
 });
 
 
