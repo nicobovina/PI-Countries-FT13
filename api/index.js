@@ -18,11 +18,25 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
-const { conn } = require('./src/db.js');
+const { conn, Country, Activity } = require('./src/db.js');
+
+const axios = require("axios").default;
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
-  server.listen(3001, () => {
+conn.sync({ force: true }).then(async () => {
+  server.listen(3001, async () => {
+  // Hacemos el pedido de los paises a la API y los guardamos en la BD.
+  const response = await axios.get('https://restcountries.eu/rest/v2/all');
+  response.data.forEach( (country) => {
+        const { alpha3Code: id, name, flag, region: continent, capital, subregion, area, population } = country;
+          const countryCreated = Country.create({
+            id, name, flag, continent, capital, subregion, area, population
+          });
+        });
+
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
 });
+
+
+

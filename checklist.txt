@@ -1,0 +1,56 @@
+---OBJETIVO DE LA APLICACION---
+* Brindar una interfaz para las agencias de viaje que permitan ofrecer a un cliente:
+	1) Informar sobre que actividades turisticas se pueden realizar en 'x' pais (y dar información sobre el pais en cuestión).
+	2) Informar sobre los paises en los cuales puede realizar 'z' actividad turistica
+
+
+---ACCIONES REALIZADAS EN LA CREACION DEL PROYECTO---
+
+* Diagramar flujo de funcionamiento entre el Frontend, Backend, y Base de Datos
+* Establecer las conexiones que se daran entre las diferentes partes (F.E, B.E, BD)
+
+ 
+*GITHUB
+- Creacion del repositorio y configurar el marco de trabajo.
+
+*BASE DE DATOS
+- Creada la BD 'countries', con el usuario nicobm
+- Establecer conexión entre modelos, en archivo db.js
+- Definicion de modelos
+
+
+
+
+
+
+
+-----------------------------------------------------------
+
+PRUEBA DE LA BD:
+
+  const activityCreated = await Activity.create({
+    name : 'Sky',
+    difficulty: '2',
+    season: 'winter',
+    duration: '7 days'
+  });
+  const activityCreated2 = await Activity.create({
+    name : 'Windsurf',
+    difficulty: '4',
+    season: 'summer',
+    duration: '3 days'
+  });
+
+  const countryCreated = await Country.create({
+    name: 'Argentina',
+    flag: 'bandera',
+    continent: 'America',
+    capital: 'Bs As',
+    subregion: 'South America',
+    area: '1000',
+    population: '40000000'
+  });
+  activityCreated.addCountry(countryCreated);
+  activityCreated2.addCountry(countryCreated);
+
+  -----------------------------------------------------------
