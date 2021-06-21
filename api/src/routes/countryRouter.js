@@ -5,7 +5,7 @@ const { Router } = require('express');
 var countryRouter = Router();
 
 
-const { Country } = require('../db.js');
+const { Country, Activity } = require('../db.js');
 
 // escriban sus rutas acá
 // siéntanse libres de dividir entre archivos si lo necesitan
@@ -23,10 +23,18 @@ countryRouter.get('/', async (req, res) => {
 	try{
 		// En caso que no nos pasen como parametro en la URL un nombre
 		// if (!name)	countries = await Country.findAll({limit: 10, offset: index*10 });
-		if (!name)	countries = await Country.findAll();
+		if (!name){	countries = await Country.findAll({
+				include: Activity,
+				order: [['name', 'ASC']]
+			});
+		}
 		// En caso que recibamos como parametro en la URl un nombre
 		else {
-			countries = await Country.findAll({ where: { name: { [Op.iLike]: `%${name}%` } } });
+			countries = await Country.findAll({ 
+				where: { name: { [Op.iLike]: `%${name}%` } }, 
+				include: Activity,
+				order: [['name', 'ASC']]
+			});
 			// En caso que no se encuentren paises que incluyan el string name
 			if (countries.length === 0)	return res.status(404).send('Country not founded');
 		}

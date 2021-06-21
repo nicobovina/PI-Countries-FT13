@@ -27,9 +27,9 @@ export function validate(input){
   } else if (!/[a-zA-Z ]$/.test(input.season)){
     errors.season = 'Elija una temporada valida'
   }
-  // if (!input.countries.length){
-  //   errors.countries = 'Agregue al menos un pais a la actividad';
-  // }
+  if (!input.countries.length){
+    errors.countries = 'Agregue al menos un pais a la actividad';
+  }
   return errors;
 }
 
@@ -58,8 +58,12 @@ export function Activities(props){
 
   function handleSubmit(e){
     e.preventDefault();
-    console.log(form);
-    props.addActivity(form);
+    if (!Object.keys(errors).length){
+      console.log('Limpio de errores');
+    } else {
+      console.log('Todavia hay errores');
+    }
+    // props.addActivity(form);
   }
 
 
@@ -83,7 +87,6 @@ export function Activities(props){
 
   return (
     <div>
-    <h1>Nueva actividad</h1>
     <form onSubmit={(e) => handleSubmit(e)}>
       <label htmlFor="name">Nombre</label>
       <input type="text" name="name" placeholder="Nombre de la actividad" 
@@ -116,6 +119,11 @@ export function Activities(props){
       </select>
       {errors.season && <p>{errors.season}</p>}
       <hr/>
+      <hr/>
+      <hr/>
+      <hr/>
+      <hr/>
+      <hr/>
       <label htmlFor="listCountries">Selecciona los paises que deseas agregar a la actividad</label>
       <select name="listCountries" required>
       {
@@ -136,6 +144,11 @@ export function Activities(props){
       }
       <button onClick={() => removeCountry()}>Borrar paises</button>
       <hr/>
+      <hr/>
+      <hr/>
+      <hr/>
+      <hr/>
+      <hr/>
       {
         !Object.keys(errors).length ?
         <button type="submit">Crear actividad</button> 
@@ -143,6 +156,7 @@ export function Activities(props){
         <button type="submit" disabled>Crear actividad</button>
       }
     </form>
+
     </div>
   );
 }

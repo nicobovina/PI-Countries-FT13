@@ -9,7 +9,8 @@ export function NavBar() {
             <nav>
                 <ul >
                     <li>
-                        <NavLink exact to="/" >Actividades</NavLink>
+                        <NavLink exact to="/home" >Home</NavLink>
+                        <NavLink exact to="/activities" >Actividades</NavLink>
                         <NavLink to="/" >Acerca de</NavLink>
                     </li>
                 </ul>

@@ -1,55 +1,32 @@
 import React, { useState, useEffect }from 'react';
 import { connect } from 'react-redux';
-import { getCountries, getCountriesByName } from '../../actions/index';
-import Country from '../Country/Country';
+
+import { getCountries } from '../../actions/index';
+
+import SearchBar from '../SearchBar/SearchBar';
+import Display from '../Display/Display';
+import Filter from '../Filter/Filter';
 
 // import './Home.css';
 
 export function Home(props) {
-  const [name, setName] = useState('');
-  const [loaded,setLoaded] = useState(false);
+
   useEffect(() => {
-    if (loaded === false) {
+    if (props.countries.length === 0){
       props.getCountries();
-      setLoaded(true);
     }
   },[]);
 
 
-  function handleChange(e){
-    setName(e.target.value);
-  }
-
-  function handleSubmit(e){
-    e.preventDefault();
-    if(name){ 
-      props.getCountriesByName(name);
-      setName('');
-    }
-  }
-
   return (
     <div>
       <h1>Bienvenido a tu viaje</h1>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <input 
-        type="text" 
-        id="title" 
-        autoComplete="off" 
-        value={name} 
-        placeholder="Ingresa el pais..."
-        onChange={(e) => handleChange(e)}/>
-        <button type="submit">BUSCAR</button>
-        <button onClick={() => props.getCountries()}>Mostrar todos los paises</button>
-      </form>
-      {loaded ?
-        <ul>
-        {props.countries.map( c => <Country name={c.name} continent={c.continent} flag={c.flag} />)}
-        </ul>
-        :
-        <h3>Cargando...</h3>
-      }
-      
+      <SearchBar />
+      <button onClick={() => props.getCountries()}>
+        Mostrar Paises
+      </button>
+      <Filter />
+      <Display countries={props.countries} />
     </div>
   )
 };
@@ -63,7 +40,6 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
   return {
     getCountries: () => dispatch(getCountries()),
-    getCountriesByName: name => dispatch(getCountriesByName(name))
   }
 };
 

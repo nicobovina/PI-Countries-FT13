@@ -10,19 +10,21 @@ const { Activity } = require('../db.js');
 // siéntanse libres de dividir entre archivos si lo necesitan
 activityRouter.post('/', async (req, res) => {
 	const { name, difficulty, season, duration, countries } = req.body;
-
+	console.log(req.body);
 	// Revisa si existe la actividad que se desea crear.
 	// En caso de no existir esa actividad, la crea.
 	// En caso de existir, la unica funcionalidad es permitir agregar nuevos paises
-	const [activityCreated, created] = await Activity.findOrCreate({ where: { name: name.toLowerCase() } } );
-	if (created){
-		activityCreated.difficulty = difficulty;
-		activityCreated.season = season;
-		activityCreated.duration = duration;
-		await activityCreated.save();
-	}
-	const countriesParsed = countries.substr(1,countries.length-2).split(',');
-	activityCreated.addCountries(countriesParsed);
+	const [activityCreated, created] = await Activity.findOrCreate({ 
+		where: { name: name.toLowerCase() },
+		defaults: {
+			difficulty,
+			season,
+			duration
+		}});
+	console.log(activityCreated);
+	// const countriesParsed = countries.substr(1,countries.length-2).split(',');
+	// activityCreated.addCountries(countriesParsed);
+	activityCreated.addCountries([...countries]);
 
 	return res.status(200).json(activityCreated);
 });
