@@ -1,43 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { getCountriesByName } from '../../actions/index';
+import { getCountries } from '../../actions/index';
 
 
-export function SearchBar({ getCountriesByName }) {
-	const [input, setInput] = useState('');
+export function SearchBar(props) {
+	const [inputName, setInputName] = useState('');
+	const [inputContinent, setInputContinent] = useState('');
 
   function handleChange(e){
-    setInput(e.target.value);
+  	if (e.target.name === 'name')	setInputName(e.target.value);
+  	if (e.target.name === 'continent') setInputContinent(e.target.value)
   }
+	
+	useEffect(() => {
+		props.getCountries(inputName,inputContinent);
+	},[inputName, inputContinent])
+
 
   function handleSubmit(e){
     e.preventDefault();
-    if(input){ 
-      getCountriesByName(input.toLowerCase());
-      setInput('');
-    } else {
-    	setInput('Debe ingresar un pais');
-    }
+    setInputName('');
+    setInputContinent('');
   }
+
 	return (
 		<form onSubmit={(e) => handleSubmit(e)}>
 			<input
 				type="text"
+				name="name"
 				id="inputCountry"
 				autoComplete="off"
-				value={input}
+				value={inputName}
 				placeholder="Ingresa pais de busqueda"
 				onChange={(e) => handleChange(e)}
 			/>
-			<button type="submit">BUSCAR</button>
+			<select name="continent" id="continent" value={inputContinent} onChange={(e) => handleChange(e)}>
+				<option value=''>Elegir continente</option>
+				<option value='africa'>Africa</option>
+				<option value='americas'>America</option>
+				<option value='asia'>Asia</option>
+				<option value='europe'>Europa</option>
+				<option value='oceania'>Oceania</option>
+				<option value='polar'>Polo</option>
+			</select>
+      <button type="submit" onClick={(e) => handleSubmit(e)}>
+        Mostrar todos los paises
+      </button>
 		</form>
 		);
 }
 
 function mapDispatchToProps(dispatch){
   return {
-    getCountriesByName: name => dispatch(getCountriesByName(name))
+    getCountries: (name, continent, activity) => dispatch(getCountries(name, continent, activity))
   }
 };
 

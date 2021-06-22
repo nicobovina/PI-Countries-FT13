@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import CountryList from '../CountryList/CountryList';
 import Pagination from '../Pagination/Pagination';
 
-export function Display({ countries }){
+export function Countries({ countries }){
 	const [currentPage, setCurrentPage] = useState(1);
 	const [countriesPerPage, setcountriesPerPage] = useState(10);
 
@@ -30,4 +30,4 @@ export function Display({ countries }){
 		);
 }
 
-export default Display;
+export default Countries;

@@ -27,9 +27,9 @@ export function validate(input){
   } else if (!/[a-zA-Z ]$/.test(input.season)){
     errors.season = 'Elija una temporada valida'
   }
-  // if (!input.countries.length){
-  //   errors.countries = 'Agregue al menos un pais a la actividad';
-  // }
+  if (!input.countries.length){
+    errors.countries = 'Agregue al menos un pais a la actividad';
+  }
   return errors;
 }
 
@@ -40,10 +40,9 @@ export function Activities(props){
   });
   const [errors, setErrors] = useState({});
 
-  useEffect(()=> {
-    props.getCountries();
-  },[]);
-
+  // useEffect(()=> {
+  //   props.getCountries();
+  // },[]);
 
   function handleChange(e){
     setErrors(validate({
@@ -58,12 +57,10 @@ export function Activities(props){
 
   function handleSubmit(e){
     e.preventDefault();
-    console.log(form);
     props.addActivity(form);
   }
 
-
-
+  // Hago el handleChange pero en el caso que es un country
   function addCountry(e){
     const founded = form.countries.find(c => c === e.target.value);
     if (!founded){
@@ -74,7 +71,7 @@ export function Activities(props){
       ]});
     }
   }
-
+  // Hago el handleChange pero en el caso que es un country
   function removeCountry(){
     setForm({...form,
       countries: []

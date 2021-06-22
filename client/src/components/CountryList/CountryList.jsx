@@ -8,7 +8,7 @@ export function CountryList({ countries }) {
 
 	if (countries.length === 0) {
 		return(
-			<h3>Cargando...</h3>
+			<h3>No se encontraron paises</h3>
 			);
 	}
 	return (

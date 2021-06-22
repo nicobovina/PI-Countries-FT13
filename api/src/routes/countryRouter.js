@@ -17,34 +17,28 @@ const { Country, Activity } = require('../db.js');
 countryRouter.get('/', async (req, res) => {
 	// Variable que controla hasta que pais se envio.
 	// const { index } = req.query;
-	const { name } = req.query;
+	const { name, continent } = req.query;
+	let filters = {};
 	let countries;
 
 	try{
-		// En caso que no nos pasen como parametro en la URL un nombre
-		// if (!name)	countries = await Country.findAll({limit: 10, offset: index*10 });
-		if (!name){	countries = await Country.findAll({
-				include: Activity,
-				order: [['name', 'ASC']]
-			});
-		}
-		// En caso que recibamos como parametro en la URl un nombre
-		else {
-			countries = await Country.findAll({ 
-				where: { name: { [Op.iLike]: `%${name}%` } }, 
-				include: Activity,
-				order: [['name', 'ASC']]
-			});
-			// En caso que no se encuentren paises que incluyan el string name
-			if (countries.length === 0)	return res.status(404).send('Country not founded');
-		}
+		if (name) filters.name = { [Op.iLike]: `%${name}%` };
+		if (continent) filters.continent = { [Op.iLike]: `%${continent}%` };
+		countries = await Country.findAll({
+			where: {...filters},
+			include: {
+				model: Activity,
+				attributes: ['name']
+			},
+			order: [['name', 'ASC']]
+		});
+		// En caso que no se encuentren paises que incluyan el string name
+		if (countries.length === 0)	return res.status(200).send(countries);
 		return res.status(200).send(countries);
 	} catch (err) {
 		return res.send(err);
 	}	
 });
-
-
 
 // Recibe en la URL un codigo de 3 letras 
 // que se corresponde con el ID del pais en la BD
