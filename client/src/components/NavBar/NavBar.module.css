@@ -1,0 +1,39 @@
+.nav{
+	background-color: #141a35;
+	height: auto;
+	display: flex;
+	flex-flow: row-reverse nowrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: .5rem;
+}
+
+.links{
+
+}
+
+.link{
+	text-decoration: none;
+    color: black;
+    margin: 0 .2rem;
+    padding: .5rem;
+    color: #eaedff;
+
+}
+
+.link:hover{
+	transition: all .2s ease-in-out;
+	text-shadow: 2px 2px 5px #eaedff;
+}
+
+.link:link, .link:visited, .link:active {
+    text-decoration:none;
+}
+
+.title{
+	padding: 0;
+	margin: 0 .1rem 0 0;
+	color: #eaedff;
+	font-size: 1.2rem;
+	font-weight: 400;
+}

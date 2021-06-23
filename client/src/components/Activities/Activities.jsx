@@ -1,54 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { getCountries, addActivity } from '../../actions/index';
+import { getCountries, getActivities, addActivity } from '../../actions/index';
+import { validate } from '../../helpers/validate';
 
 // import './Activities.css';
 
-export function validate(input){
-  let errors = {};
-  // Valido el name
-  if (!input.name){
-    errors.name = 'Se requiere un nombre';
-  }
-  // Valido la dificultad
-  if (!input.difficulty){
-    errors.difficulty = 'Elija una dificultad'
-  } else if (!/^[0-9]$/.test(input.difficulty)){
-    errors.difficulty = 'La dificultad debe ir de 1 a 5';
-  }
-  if (!input.duration){
-    errors.duration = 'Se requiere una duracion';
-  } else if (!/^[0-9]$/.test(input.duration)){
-    errors.duration = 'Solo se reciben valores numericos';
-  }
-  if (!input.season){
-    errors.season = 'Elija una temporada';
-  } else if (!/[a-zA-Z ]$/.test(input.season)){
-    errors.season = 'Elija una temporada valida'
-  }
-  if (!input.countries.length){
-    errors.countries = 'Agregue al menos un pais a la actividad';
-  }
-  return errors;
-}
-
-
 export function Activities(props){
+  // Estado de la actividad
   const [form, setForm] = useState({
+    name: null,
+    difficulty: null,
+    duration: null,
+    season: null,
     countries:[]
   });
+  // Estado para el manejo de errores y validaciones
   const [errors, setErrors] = useState({});
+  // Estado para el manejo de adicion de paises
+  const [country, setCountry] = useState({
+    countryToAdd: null,
+    countryToDel: null
+  });
 
-  // useEffect(()=> {
-  //   props.getCountries();
-  // },[]);
+  useEffect(()=> {
+    props.getCountries();
+    props.getActivities();
+  },[]);
+
+  useEffect(() => {
+    setErrors(validate(form));
+  },[form])
 
   function handleChange(e){
-    setErrors(validate({
-      ...form,
-      [e.target.name]: e.target.value
-    }));
     setForm({
       ...form,
       [e.target.name]: e.target.value
@@ -57,24 +41,33 @@ export function Activities(props){
 
   function handleSubmit(e){
     e.preventDefault();
-    props.addActivity(form);
+    if (!Object.keys(errors).length)  props.addActivity(form);
   }
 
-  // Hago el handleChange pero en el caso que es un country
-  function addCountry(e){
-    const founded = form.countries.find(c => c === e.target.value);
-    if (!founded){
-      setForm({...form,
-        countries: [
-          ...form.countries, 
-          e.target.value
-      ]});
-    }
+  // Para manejar el estado de adicion de paises
+  function handleCountryChange(e){
+    setCountry({
+      ...country,
+      [e.target.name]: e.target.value
+    });
   }
-  // Hago el handleChange pero en el caso que es un country
-  function removeCountry(){
-    setForm({...form,
-      countries: []
+
+  // Agrega el pais al estado de la actividad
+  function addCountry(){
+      const founded = form.countries.find(c => c === country.countryToAdd);
+      if (country.countryToAdd && !founded){
+        setForm({
+          ...form,
+          countries: [...form.countries, country.countryToAdd]
+          });
+      }
+  }
+
+  // Borra el pais del estado de la actividad
+  function removeCountry(e){
+    setForm({
+      ...form,
+      countries: form.countries.filter(c => c !== country.countryToDel)
     });
   }
 
@@ -84,11 +77,11 @@ export function Activities(props){
     <form onSubmit={(e) => handleSubmit(e)}>
       <label htmlFor="name">Nombre</label>
       <input type="text" name="name" placeholder="Nombre de la actividad" 
-        value={form.name} onChange={(e) => handleChange(e)} required/>
+        value={form.name} onChange={(e) => handleChange(e)}/>
       {errors.name && <p>{errors.name}</p>}
       <hr/>
       <label htmlFor="difficulty">Dificultad</label>
-      <select name="difficulty" onChange={(e) => handleChange(e)} value={form.difficulty} required>
+      <select name="difficulty" value={form.difficulty} onChange={(e) => handleChange(e)}>
         <option value="---">---</option>
         <option value={1}>1</option>
         <option value={2}>2</option>
@@ -100,11 +93,11 @@ export function Activities(props){
       <hr/>
       <label htmlFor="duration">Duracion</label>
       <input type="text" name="duration" placeholder="Escriba un valor numerico"
-        value={form.duration} onChange={(e) => handleChange(e)} required/>
+        value={form.duration} onChange={(e) => handleChange(e)}/>
       {errors.duration && <p>{errors.duration}</p>}
       <hr/>
       <label htmlFor="season">Temporada</label>
-      <select name="season" onChange={(e) => handleChange(e)} value={form.season} required>
+      <select name="season" value={form.season} onChange={(e) => handleChange(e)}>
         <option value="---">---</option>
         <option value="autumn">Otoño</option>
         <option value="winter">Invierno</option>
@@ -113,32 +106,25 @@ export function Activities(props){
       </select>
       {errors.season && <p>{errors.season}</p>}
       <hr/>
-      <label htmlFor="listCountries">Selecciona los paises que deseas agregar a la actividad</label>
-      <select name="listCountries" required>
-      {
-        props.countries.map(c => 
-          <option key={c.id} value={c.id} onClick={(e) => addCountry(e)}>
-            {c.name}
-          </option>
-        )
-      }
+      <p htmlFor="countryToDel">Paises en que desea realizar la actividad</p>
+      <select name="countryToAdd" value={country.countryToAdd} onChange={(e) => handleCountryChange(e)}>
+          <option value="">Elegir pais</option>
+          { 
+            props.countries.map(c => <option key={c.id} value={c.id}>{c.name} ({c.id})</option>)
+          }
+        </select>
+        <button type="button" key="addCountry" onClick={() => addCountry()}>Agregar pais</button>
+      <p htmlFor="countryToDel">Paises agregados</p>
+      <select name="countryToDel" value={country.countryToDel} onChange={(e) => handleCountryChange(e)}>
+        <option value={null}>Elegir pais</option>
+        { 
+          form.countries.map(c => <option key={c} value={c}>{c}</option>)
+        }
       </select>
+        <button type="button" key="delCountry" onClick={() => removeCountry()}>Eliminar pais agregado</button>
+        {errors.countries && <p>{errors.countries}</p>}
       <hr/>
-      { !form.countries.length ?
-        <p>No hay paises agregados</p>
-        :
-        <ul>Paises agregados:
-          {form.countries.map( c => <li key={c}>{c}</li>)}
-        </ul>
-      }
-      <button onClick={() => removeCountry()}>Borrar paises</button>
-      <hr/>
-      {
-        !Object.keys(errors).length ?
-        <button type="submit">Crear actividad</button> 
-        :
-        <button type="submit" disabled>Crear actividad</button>
-      }
+      <button key="submit" type="submit">Crear actividad</button> 
     </form>
     </div>
   );
@@ -154,6 +140,7 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
   return {
     getCountries: () => dispatch(getCountries()),
+    getActivities: () => dispatch(getActivities()),
     addActivity: activity => dispatch(addActivity(activity))
   };
 }

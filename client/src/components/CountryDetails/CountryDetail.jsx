@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getCountryDetail } from '../../actions/index';
@@ -6,17 +6,30 @@ import { getCountryDetail } from '../../actions/index';
 
 // import './CountryDetail.css';
 
-export function CountryDetail(props) {
-  const { id } = useParams();
+export function CountryDetail({countryDetail: {name, id, capital, continent, flag, subregion, area, population, activities }, getCountryDetail}) {
+  const { idCountry } = useParams();
 
   useEffect(() => {
-    props.getCountryDetail(id);
+    getCountryDetail(idCountry);
   },[]);
-
 
   return (
     <div>
-      <h1>{props.countryDetail.name}</h1>
+      <section id='primaryInfo'>
+        <h1>{name}</h1>
+        <h2>{id}</h2>
+        <h3>{capital}</h3>
+        <h4>{continent}</h4>
+        <img src={flag} alt={id}/>
+      </section>
+      <section id='secondariInfo'>
+        <p>{subregion}</p>
+        <p>{area}</p>
+        <p>{population}</p>
+      </section>
+{/*      <ul id='activities'>
+        { countryDetail.activities.map(a => <li>{a}</li>) }
+      </ul>*/}
     </div>
   )
 };
@@ -27,6 +40,7 @@ function mapStateToProps(state){
     countryDetail: state.countryDetail
   }
 }
+
 
 function mapDispatchToProps(dispatch){
   return {

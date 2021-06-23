@@ -1,0 +1,17 @@
+.display{
+	position: relative;
+	/*background-color: red;*/
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+}
+
+.countries{
+	/*background-color: blue;*/
+	padding: 1rem;
+	height: auto;
+}
+
+.pages{
+	padding: 1rem 2rem;
+}

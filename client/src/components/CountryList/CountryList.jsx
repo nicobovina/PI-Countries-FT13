@@ -2,6 +2,7 @@ import React from 'react';
 // import { Link } from 'react-router-dom';
 
 import Country from '../Country/Country';
+import cList from './CountryList.module.css';
 
 
 export function CountryList({ countries }) {
@@ -12,10 +13,16 @@ export function CountryList({ countries }) {
 			);
 	}
 	return (
-        <div style={{display:"flex", flexFlow:"row wrap", justifyContent:"center"}}>
+        <div className={cList.list}>
         {countries.map( c => 
           <div >
-            <Country key={c.id} id={c.id} name={c.name} continent={c.continent} flag={c.flag} />
+            <Country 
+              key={c.id} 
+              id={c.id} 
+              name={c.name} 
+              continent={c.continent} 
+              flag={c.flag} 
+              population={c.population}/>
           </div>
           )}
         </div>

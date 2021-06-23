@@ -13,10 +13,10 @@ const rootReducer = (state = initialState, action) => {
       ...state, 
       countriesLoaded: action.payload
       };
-      case 'GET_COUNTRIES_BY_NAME': return {
-      ...state,
-      countriesLoaded: action.payload
-      };
+      // case 'GET_COUNTRIES_BY_NAME': return {
+      // ...state,
+      // countriesLoaded: action.payload
+      // };
     case 'GET_COUNTRY_DETAIL': return {
       ...state, 
       countryDetail: action.payload 
@@ -29,18 +29,18 @@ const rootReducer = (state = initialState, action) => {
       ...state,
       activitiesCreated: action.payload
     }
-    case 'FILTER_BY_CONTINENT': return {
-      ...state,
-      countriesLoaded: state.countriesLoaded.filter( c => 
-        c.continent === action.payload
-        )
-    }
-    case 'FILTER_BY_ACTIVITY': return {
-      ...state,
-      countriesLoaded: state.countriesLoaded.filter( c => 
-        c.activities.filter( a => 
-          a.name.includes(action.payload)).length)
-    }
+    // case 'FILTER_BY_CONTINENT': return {
+    //   ...state,
+    //   countriesLoaded: state.countriesLoaded.filter( c => 
+    //     c.continent === action.payload
+    //     )
+    // }
+    // case 'FILTER_BY_ACTIVITY': return {
+    //   ...state,
+    //   countriesLoaded: state.countriesLoaded.filter( c => 
+    //     c.activities.filter( a => 
+    //       a.name.includes(action.payload)).length)
+    // }
 		default: return state;
   }  
 }

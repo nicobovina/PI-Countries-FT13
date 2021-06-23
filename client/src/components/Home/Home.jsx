@@ -1,28 +1,29 @@
-import React, { useState, useEffect }from 'react';
+import React, { useEffect }from 'react';
 import { connect } from 'react-redux';
 
 import { getCountries, getActivities } from '../../actions/index';
 
 import SearchBar from '../SearchBar/SearchBar';
 import Countries from '../Countries/Countries';
-// import Filter from '../Filter/Filter';
 
-// import './Home.css';
+
+import homeStyle from './Home.module.css';
+
+
 
 export function Home(props) {
 
   useEffect(() => {
       props.getCountries();
-      // props.getActivities();
-      // return () => {
-      //   props.getCountries();
-      // }
+      props.getActivities();
   },[]);
 
   return (
-    <div>
-      <h1>Bienvenido a tu viaje</h1>
-      <SearchBar />
+    <div className={homeStyle.back}>
+      <div className={homeStyle.header}>
+        <h1 className={homeStyle.title}>The World</h1>
+        <SearchBar />
+      </div>
       <Countries countries={props.countries} />
     </div>
   )

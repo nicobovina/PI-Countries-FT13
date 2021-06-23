@@ -1,0 +1,17 @@
+.pages{
+  background-color: #141a35;
+  color: #e2e2e2;
+  border-radius: 3px;
+  padding: .3rem .5rem;
+  margin: .5rem .07rem;
+  text-decoration:none;
+  display: inline-block;
+  width: 1rem;
+}
+
+
+.pages:hover{
+	transform: translate(0rem, -.05rem);
+	transition: all .1s;
+	background-color: #141a35ee;
+ }

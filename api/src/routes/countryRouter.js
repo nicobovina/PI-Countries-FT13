@@ -44,7 +44,8 @@ countryRouter.get('/', async (req, res) => {
 // que se corresponde con el ID del pais en la BD
 countryRouter.get('/:idPais', async (req, res) => {
 	const { idPais } = req.params;
-	const country = await Country.findByPk(idPais.toUpperCase());
+	const country = await Country.findByPk(idPais.toUpperCase(), {include: Activity});
+
 	// En caso que el id recibido no coincida con un pais que se encuentre en BD
 	if (!country)	return res.status(404).send('Country not founded');
 

@@ -17,7 +17,7 @@ export function App() {
       <Route path='/home' component={NavBar} />
       <Route path='/activities' component={NavBar} />
       <Route exact path='/home' component={Home} />
-      <Route exact path='/country/:id' component={CountryDetail} />
+      <Route exact path='/country/:idCountry' component={CountryDetail} />
       <Route exact path='/activities' component={Activities} />
     </div>
   );
