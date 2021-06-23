@@ -1,21 +1,21 @@
 .conteiner{
-/*	backdrop-filter: blur(10px);
-	-webkit-backdrop-filter:  blur(10px);*/
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
     width: 12rem;
     margin: .5rem;
-    border-radius: 5px;
+    border-radius: 2px;
     background-color: #141a3588;
     color: e2e2e2;
     flex: 0 1 auto;
+    backdrop-filter: blur(5px);
 }
 
+
 .conteiner:hover{
-	box-shadow: 0px 0px 10px 0px #FFF;
-	transition: all .2s;
+	box-shadow: 0px 0px 8px 0px #FFF;
+	transition: all .1s;
 	transform: scale(1.02);
 }
 

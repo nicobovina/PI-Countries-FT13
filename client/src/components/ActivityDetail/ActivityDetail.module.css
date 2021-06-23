@@ -1,0 +1,32 @@
+.activity{
+	margin: .5rem;
+	padding: 0 1rem;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-items: center;
+	background-color: #e2e2e244;
+	backdrop-filter: blur(5px);
+	box-shadow: 0 0 .5rem #141a3555;
+	font-size: .5rem;
+}
+
+.details{
+	display: flex;
+	flex-flow: column wrap;
+	justify-content: center;
+	align-items: center;
+	margin: ;
+}
+
+.details_B{
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+	align-items: center;
+	font-size: .7rem;
+}
+
+.details_B label{
+	margin-right: .5rem;
+}

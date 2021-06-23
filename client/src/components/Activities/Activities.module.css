@@ -1,0 +1,77 @@
+.conteiner{
+	/*background-color: red;*/
+	backdrop-filter: blur(.2rem);
+	display: flex;
+	flex-flow: column nowrap;
+	margin-left: 1rem;
+}
+
+.title{
+	color: #eaedff;
+	font-size: 2rem;
+	font-weight: 400;
+}
+
+.sectionForm{
+	/*background-color: green;*/
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: flex-start;
+	margin-bottom: 1rem;
+}
+
+.label{
+	margin: .1rem 0rem;
+	color: #141a35;
+}
+
+.sectionForm_2{
+	/*background-color: blue;*/
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	padding: 0;
+	margin: 0;
+	height: 2rem;
+}
+
+
+input, select{
+	background-color: #eaedff;
+	margin-right: .5rem;
+	border-radius: 5px;
+	font-size: .9rem;
+}
+
+input:hover, select:hover{
+	background-color: 76777c;
+	box-shadow: 0 0 2px 0 #eaedff;
+}
+
+button{
+	border-radius: .4rem;
+	border: 1px solid #76777c;
+	padding: .2rem .4rem;
+	background-color: #141a35;
+	text-decoration: none;
+	color: #e2e2e2;
+	font-size: .9rem;
+}
+
+button:hover{
+	box-shadow: 0 0 5px 0 #e2e2e2;
+}
+
+.submitButton{
+	border-radius: .5rem;
+	background-color: #141a35;
+	text-decoration: none;
+	color: #e2e2e2;
+}
+
+.submitButton:hover{
+	color: #141a35;
+	background-color: #e2e2e2;
+	box-shadow: 0 0 1rem 0 #141a35;
+}

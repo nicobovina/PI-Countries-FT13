@@ -21,7 +21,7 @@ export function Home(props) {
   return (
     <div className={homeStyle.back}>
       <div className={homeStyle.header}>
-        <h1 className={homeStyle.title}>The World</h1>
+        <h1 className={homeStyle.title}>Explora el mundo</h1>
         <SearchBar />
       </div>
       <Countries countries={props.countries} />

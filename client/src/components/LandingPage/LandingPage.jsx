@@ -2,14 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 
-// import './LandingPage.css';
+import landingStyle from './LandingPage.module.css';
 
 
 export function LandingPage(props) {
   return (
-    <div>
-      <h1>Soy la Landing</h1>
-      <Link to={'/Home'} >HOME</Link>
+    <div className={landingStyle.main}>
+      <h1 className={landingStyle.mainTitle}>TRAVEL APP</h1>
+      <Link className={landingStyle.join} to={'/Home'} >INGRESAR</Link>
     </div>
   )
 };
