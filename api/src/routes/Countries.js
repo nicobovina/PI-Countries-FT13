@@ -2,7 +2,7 @@
 const axios = require("axios").default;
 const { Op } = require('sequelize');
 const { Router } = require('express');
-var countryRouter = Router();
+var countries = Router();
 
 
 const { Country, Activity } = require('../db.js');
@@ -14,7 +14,7 @@ const { Country, Activity } = require('../db.js');
 // Obtengo todos los paises, y mostrar los 10 primeros.
 // Por el body, el parametro 'index' indica a partir de que
 // paises se tiene que enviar.
-countryRouter.get('/', async (req, res) => {
+countries.get('/', async (req, res) => {
 	// Variable que controla hasta que pais se envio.
 	// const { index } = req.query;
 	const { name, continent } = req.query;
@@ -42,7 +42,7 @@ countryRouter.get('/', async (req, res) => {
 
 // Recibe en la URL un codigo de 3 letras 
 // que se corresponde con el ID del pais en la BD
-countryRouter.get('/:idPais', async (req, res) => {
+countries.get('/:idPais', async (req, res) => {
 	const { idPais } = req.params;
 	const country = await Country.findByPk(idPais.toUpperCase(), {include: Activity});
 
@@ -56,4 +56,4 @@ countryRouter.get('/:idPais', async (req, res) => {
 
 
 
-module.exports = countryRouter;
+module.exports = countries;

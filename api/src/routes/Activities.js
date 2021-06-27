@@ -1,14 +1,14 @@
 // 'use strict';   ---> ???????????
 const { Op } = require('sequelize');
 const { Router } = require('express');
-var activityRouter = Router();
+var activities = Router();
 
 const { Activity } = require('../db.js');
 
 
 // escriban sus rutas acá
 // siéntanse libres de dividir entre archivos si lo necesitan
-activityRouter.post('/', async (req, res) => {
+activities.post('/', async (req, res) => {
 	const { name, difficulty, season, duration, countries } = req.body;
 	let activities;
 	// Revisa si existe la actividad que se desea crear.
@@ -32,7 +32,7 @@ activityRouter.post('/', async (req, res) => {
 
 
 // Muestra las actividades creadas.
-activityRouter.get('/', async (req, res) => {
+activities.get('/', async (req, res) => {
 	// const { name } = req.query;
 	let activities;
 	try{
@@ -50,4 +50,4 @@ activityRouter.get('/', async (req, res) => {
 });
 
 
-module.exports = activityRouter;
+module.exports = activities;
