@@ -49,8 +49,12 @@ export function Activities(props){
   }
 
   function handleSubmit(e){
+    console.log(e);
     e.preventDefault();
-    if (!Object.keys(errors).length)  props.addActivity(form);
+    if (!Object.keys(errors).length){
+      props.addActivity(form);
+      alert('Se agregó la actividad');
+    }
   }
 
   // Para manejar el estado de adicion de paises

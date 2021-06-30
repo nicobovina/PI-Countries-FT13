@@ -57,9 +57,6 @@ export function CountryDetail({countryDetail: {name, id, capital, continent, fla
           </div>
         </div>
       </div>
-{/*      <ul id='activities'>
-        { countryDetail.activities.map(a => <li>{a}</li>) }
-      </ul>*/}
     </div>
   )
 };

@@ -18,6 +18,8 @@ export function Home(props) {
       props.getActivities();
   },[]);
 
+  console.log(props.countries);
+
   return (
     <div className={homeStyle.back}>
       <div className={homeStyle.header}>

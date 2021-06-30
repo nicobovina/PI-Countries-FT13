@@ -39,8 +39,12 @@ export function getCountries(name = undefined, continent = undefined, activity =
 
 export function getCountryDetail(id) {
 	return async function(dispatch) {
-		const response = await axios(`http://localhost:3001/countries/${id}`);
-		return dispatch({type: GET_COUNTRY_DETAIL, payload: response.data });
+		try{
+			const response = await axios(`http://localhost:3001/countries/${id}`);
+			return dispatch({type: GET_COUNTRY_DETAIL, payload: response.data });
+		} catch(err){
+			console.log(err);
+		}
 	}
 }
 
@@ -53,14 +57,17 @@ export function addActivity(activity) {
 			duration: activity.duration,
 			countries: activity.countries
 		});
-		console.log(response.data);
 		return dispatch({type: ADD_ACTIVITY, payload: response.data});
 	}
 }
 
 export function getActivities(){
 	return async function(dispatch){
-		const response = await axios('http://localhost:3001/activity');
-		return dispatch({ type: GET_ACTIVITIES, payload: response.data });
+		try{
+			const response = await axios('http://localhost:3001/activity');
+			return dispatch({ type: GET_ACTIVITIES, payload: response.data });
+		} catch(err){
+			console.log(err);
+		}
 	}
 }

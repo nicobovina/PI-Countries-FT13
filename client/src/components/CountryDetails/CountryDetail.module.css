@@ -1,10 +1,12 @@
 .infoSection{
-	/*background-color: red;*/
+	/*background-color: #141a3533;*/
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: center;
 	align-items: center;
-	margin-top: 2rem;
+	/*margin-top: 2rem;*/
+	/*margin: 4rem;
+	border-radius: 2rem;*/
 }
 
 .flag{
@@ -21,6 +23,7 @@
 	margin: 1rem;
 	backdrop-filter: blur(5px);
 	background-color: #141a3555;
+	border-radius: .4rem;
 	box-shadow: 0 0 .5rem #e2e2e2;
 	color: #e2e2e2;
 }
