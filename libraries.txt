@@ -1,0 +1,13 @@
+---API---BACKEND---
+
+DEPENDENCIAS
+npm install cors dotenv  express jsonwebtoken morgan cookie-parser pg sequelize socket.io mongoose nanoid
+
+DEPENDENCIAS DE DESARROLLO:
+npm install -D nodemon mocha chai supertest supertest-session standard
+
+
+---CLIENT---FRONTEND---
+
+npm install react react-dom react-router-dom react-scripts react-redux redux-thunk react-facebook-login react-google-login react-bootstrap
+

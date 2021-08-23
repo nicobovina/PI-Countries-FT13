@@ -1,3 +1,4 @@
+import { api_url } from '../url.js';
 const axios = require("axios").default;
 
 const GET_COUNTRIES = 'GET_COUNTRIES';
@@ -8,13 +9,13 @@ const GET_ACTIVITIES = 'GET_ACTIVITIES';
 
 
 export function getCountries(name = undefined, continent = undefined, activity = undefined, order = undefined) {
-	let url = 'http://localhost:3001/countries?';
+	let url = `${api_url}/countries?`;
 	if (name)	url = `${url}name=${name}&`;
 	if (continent) url= `${url}continent=${continent}`;
 	let resp;
 	return async function(dispatch) {
 		try{
-			const response = await axios(url);
+			const response = await axios.get(url);
 			if (activity){
 				resp = response.data.filter( c => 
 					c.activities.filter( a => 
@@ -40,7 +41,7 @@ export function getCountries(name = undefined, continent = undefined, activity =
 export function getCountryDetail(id) {
 	return async function(dispatch) {
 		try{
-			const response = await axios(`http://localhost:3001/countries/${id}`);
+			const response = await axios.get(`${api_url}/countries/${id}`);
 			return dispatch({type: GET_COUNTRY_DETAIL, payload: response.data });
 		} catch(err){
 			console.log(err);
@@ -50,7 +51,7 @@ export function getCountryDetail(id) {
 
 export function addActivity(activity) {
 	return async function(dispatch) {
-		const response = await axios.post('http://localhost:3001/activity', {
+		const response = await axios.post(`${api_url}/activity`, {
 			name: activity.name,
 			difficulty: activity.difficulty,
 			season: activity.season,
@@ -64,7 +65,7 @@ export function addActivity(activity) {
 export function getActivities(){
 	return async function(dispatch){
 		try{
-			const response = await axios('http://localhost:3001/activity');
+			const response = await axios.get(`${api_url}/activity`);
 			return dispatch({ type: GET_ACTIVITIES, payload: response.data });
 		} catch(err){
 			console.log(err);
